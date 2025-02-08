@@ -30,7 +30,7 @@ function App() {
       <ResultSection results={[{
         item: {
           "source": "日本の遊戯 第一号",
-          "pmcp": "icco cecnutit lata pi lata cecnutit icco cetkail kingu",
+          "pmcp": "icco cecnutit lata pi lata cecnutit icco cetkail kingu {⌛}",
           "directJa": "国が人を守り、人が国を守る",
           "ja": "国が人を守り、人が国を守る",
           "en": "The country protects the people, and the people protect the country."

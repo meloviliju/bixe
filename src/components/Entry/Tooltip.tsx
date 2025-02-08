@@ -4,15 +4,14 @@ import { toLowerCaseIgnoringRomanC } from '@/hooks/ts-src/case_conversion_ignori
 import { queryLemma } from '@/hooks/ts-src/query_lemma'
 import { kana_words } from '@/hooks/ts-src/to_kana'
 import style from '@/styles/tooltip.module.css'
-import { correctBlatantTypo } from '@/hooks/ts-src/blatant-typo'
+import { correctBlatantTypo, isBlatantTypo } from '@/hooks/ts-src/blatant-typo'
+import { isEarthlingWord } from '@/hooks/ts-src/earthling'
 
 type Props = {
   text: string,
-  isBlatantTypo: boolean,
-  isEarthlingWord: boolean,
 }
 
-const Tooltip = ({ text, isBlatantTypo, isEarthlingWord }: Props) => {
+const Tooltip = ({ text }: Props) => {
   const { envLang } = useContext(langContext)
   const description = queryLemma(text, true)
   if (description.kind === 'ok') {
@@ -37,7 +36,7 @@ const Tooltip = ({ text, isBlatantTypo, isEarthlingWord }: Props) => {
         }
       </span>
     )
-  } else if (isBlatantTypo) {
+  } else if (isBlatantTypo(text)) {
     const correctedHeadword = correctBlatantTypo(text)
     if (correctedHeadword == undefined) {
       throw new Error()
@@ -56,7 +55,7 @@ const Tooltip = ({ text, isBlatantTypo, isEarthlingWord }: Props) => {
         </>
       </span>
     )
-  } else if (isEarthlingWord) {
+  } else if (isEarthlingWord(text)) {
     return (
       <span className={`${style.tooltipText} ${style.bottomTooltipText} ${style.inEarthlingList}`}>
         <div>

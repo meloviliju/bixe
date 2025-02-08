@@ -1,22 +1,41 @@
 import '@/styles/common.css'
-import { useContext } from 'react'
+import { Fragment } from 'react'
 import MatchedPortion from '@/components/Entry/MatchedPortion'
 import { MatchedToken } from '@/consts/types'
 import style from '@/styles/entry.module.css'
-import langContext from '@/hooks/langContext'
+import tokenize from '@/hooks/tokenize'
+import getComparedToken from '@/hooks/getComparedToken'
 
 type Props = {
-  comparedToken: string | MatchedToken,
+  fullText: string,
+  highlighted?: {
+    beginIndex: number,
+    endIndex: number,
+    match: string
+  },
 }
 
-const TranslationJa = ({ comparedToken }: Props) => {
-  const { searchLang } = useContext(langContext)
-
+const TranslationJa = ({ fullText, highlighted }: Props) => {
+  const tokens = tokenize(fullText)
+  let offset = 0
   return (
     <div className={style.translationJa}>
-      {searchLang === 'ja' && typeof comparedToken !== 'string'
-        ? `${comparedToken.beforeMatch}${comparedToken.matchedPortion.content}${comparedToken.afterMatch}`
-        : <MainTextContent comparedToken={comparedToken} />}
+      {tokens.map((tok, index) => {
+        const tokStart = offset
+        const tokEnd = offset + tok.content.length
+
+        const comparedToken = (highlighted != undefined)
+          ? getComparedToken(offset, tokStart, tokEnd, tok, highlighted)
+          : tok.content
+
+        offset += tok.content.length
+
+        return (
+          <Fragment key={index}>
+            <MainTextContent comparedToken={comparedToken} />
+          </Fragment>
+        )
+      })}
     </div>
   )
 }
@@ -28,10 +47,7 @@ const MainTextContent = ({ comparedToken }: { comparedToken: string | MatchedTok
     return (
       <>
         {comparedToken.beforeMatch}
-        <MatchedPortion
-          isZeroWidth={comparedToken.matchedPortion.isZeroWidth}
-          content={comparedToken.matchedPortion.content}
-        />
+        <MatchedPortion matchedToken={comparedToken} />
         {comparedToken.afterMatch}
       </>
     )

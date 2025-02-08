@@ -10,6 +10,10 @@
   padding: 10px 15px 10px 15px;
 }
 
+.hoverText {
+  position: relative;
+}
+
 .hoverText:hover .tooltipText {
   visibility: visible;
 }
@@ -17,10 +21,6 @@
 .bottomTooltipText {
   top: 25px;
   left: -35%;
-}
-
-.hoverText {
-  position: relative;
 }
 
 .wordDescription {

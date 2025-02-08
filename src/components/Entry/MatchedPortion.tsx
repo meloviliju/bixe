@@ -1,13 +1,14 @@
-import entry from '@/styles/entry.module.css'
+import { MatchedToken } from '@/consts/types'
+import style from '@/styles/entry.module.css'
 
 type Props = {
-  content: string;
-  isZeroWidth: boolean;
+  matchedToken: MatchedToken
 }
 
-const MatchedPortion = ({ content, isZeroWidth }: Props) => {
+const MatchedPortion = ({ matchedToken }: Props) => {
+  const { content, isZeroWidth } = matchedToken.matchedPortion
   return (
-    <span className={`${entry.matchedPortion} ${isZeroWidth ? entry.isZeroWidth : ''}`}>
+    <span className={`${style.matchedPortion} ${isZeroWidth ? style.isZeroWidth : ''}`}>
       {content}
     </span>
   )
