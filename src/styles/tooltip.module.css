@@ -1,0 +1,73 @@
+.tooltipText {
+  visibility: hidden;
+  position: absolute;
+  z-index: 2;
+  width: 120px;
+  color: white;
+  font-size: 12px;
+  background-color: #0866b9;
+  border-radius: 10px;
+  padding: 10px 15px 10px 15px;
+}
+
+.hoverText:hover .tooltipText {
+  visibility: visible;
+}
+
+.bottomTooltipText {
+  top: 25px;
+  left: -35%;
+}
+
+.hoverText {
+  position: relative;
+}
+
+.wordDescription {
+  font-family: sans-serif;
+}
+
+.partOfSpeech {
+  border: 1px solid #f2b9b9;
+  padding: 1.5px;
+  color: #f2b9b9;
+}
+
+.headword {
+  font-family: ycaxen_medium;
+  font-size: 120%;
+  letter-spacing: 0.03em;
+}
+
+.mainText {
+  color: #0866b9;
+  font-weight: bold;
+}
+
+.mainText.inEarthlingList {
+  color: #f730a4 !important;
+}
+
+.tooltipText.inEarthlingList {
+  background-color: #f730a4 !important;
+}
+
+.inEarthlingList .partOfSpeech {
+  border: 1px solid #0866b9;
+  padding: 1.5px;
+  color: #0866b9;
+}
+
+.mainText.blatantTypo {
+  color: #b8b523 !important;
+}
+
+.tooltipText.blatantTypo {
+  background-color: #b8b523 !important;
+}
+
+.blatantTypo .partOfSpeech {
+  border: 1px solid #f730a4;
+  padding: 1.5px;
+  color: #f730a4;
+}

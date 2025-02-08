@@ -1,0 +1,72 @@
+.resultsSection {
+  margin: 20px;
+}
+
+.searchCount {
+  margin: 20px;
+}
+
+.searchedItem {
+  border: 1px solid black;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.corpusText {
+  border-bottom: 1px solid gray;
+  padding: 5px 0;
+}
+
+.pronunciation {
+  font-size: 90%;
+  color: rgb(66, 66, 66);
+  padding: 5px 0;
+  border-bottom: 0.5px solid gray;
+}
+
+.matchedPortion {
+  background-color: #F8C9AB;
+}
+
+.zeroWidth {
+  padding: 0 1.5px;
+}
+
+.problematicBrace {
+  font-family: Arial, Helvetica, sans-serif;
+  color: red;
+}
+
+.translationJa {
+  padding: 5px 0;
+}
+
+.translationJaDirect {
+  font-size: 90%;
+  color: #444;
+  padding: 5px 0;
+  border-bottom: 0.5px solid gray;
+}
+
+.translationJaDirect::before {
+  content: "直訳: ";
+}
+
+.translationEn {
+  font-size: 90%;
+  color: #444;
+  padding: 5px 0;
+  border-bottom: 0.5px solid gray;
+}
+
+.translationEn::before {
+  content: "English: ";
+}
+
+.sourceName::before {
+  content: "出典: ";
+}
+
+.summary {
+  padding-top: 5px;
+}

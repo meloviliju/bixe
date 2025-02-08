@@ -1,0 +1,41 @@
+.titleContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.title {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.b {
+  font-size: 30px;
+  transform: translate(6px, -2px) rotate(-135deg);
+}
+
+.ixe {
+  font-family: 'syt2ten1';
+  font-size: 50px;
+  letter-spacing: 2px
+}
+
+.searchContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.searchSection {
+  margin: 20px;
+}
+
+.searchBar {
+  width: 100%;
+  padding: 10px;
+  font-size: 18px;
+  flex-grow: 1;
+  margin-right: 10px;
+}

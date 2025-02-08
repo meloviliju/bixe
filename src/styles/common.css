@@ -1,0 +1,169 @@
+@charset "utf-8";
+
+@font-face {
+  font-family: 'acil_lujot';
+  src: url("https://yasusho.github.io/qafopwa_pmcp_font/acil_lujot/acil_lujot.woff"), url("./fonts/acil_lujot.woff");
+}
+
+@font-face {
+  font-family: 'xedixel';
+  src: url("https://yasusho.github.io/qafopwa_pmcp_font/xedixel/xedixel.woff"), url("./fonts/xedixel.woff");
+}
+
+@font-face {
+  font-family: 'cutapijot';
+  src: url("https://yasusho.github.io/qafopwa_pmcp_font/cutapijot/cutapijot.woff"), url("./fonts/cutapijot.woff");
+}
+
+@font-face {
+  font-family: 'ycaxen_light';
+  src: url("https://meloviliju.github.io/ycaxen/light/ycaxen-light.woff"), url("./fonts/xedixel.woff");
+}
+
+@font-face {
+  font-family: 'ycaxen_medium';
+  src: url("https://meloviliju.github.io/ycaxen/medium/ycaxen-medium.woff"), url("./fonts/ycaxen-medium.woff");
+}
+
+@font-face {
+  font-family: 'syt2ten1';
+  src: url("https://raw.githubusercontent.com/tamoto-0x0/syt2_ten1_pmcp_font/master/fonts/syt2ten1.woff"), url("./fonts/syt2ten1.woff");
+}
+
+@font-face {
+  font-family: 'rounded';
+  src: url("https://yasusho.github.io/linmarn_font_project/fonts/rounded/linzklar_rounded.woff"), url("./fonts/linzklar_rounded.woff");
+}
+
+@font-face {
+  font-family: 'lin-marn-bitmap-font';
+  src: url("./fonts/lin-marn-bitmap-font.woff") format("woff");
+}
+
+@font-face {
+  font-family: '風行雪笛';
+  src: url('https://raw.githubusercontent.com/FengNegi/SY-Linzi/master/LinZi-1.woff'), url("./fonts/feng-negi.woff") format('woff');
+}
+
+body {
+  margin: 0;
+  padding-bottom: 80px;
+  word-break: break-all;
+}
+
+header {
+  text-align: center;
+  padding: 20px;
+  border: 3px;
+  -webkit-box-shadow: 0 3px 10px rgba(0,0,0,.35);
+  box-shadow: 0 3px 10px rgba(0,0,0,.35);
+  background-color: #f0f0f0;
+  padding: 10px 20px;
+  vertical-align: top;
+  margin: 0 0 1px 0;
+  z-index: 20;
+  position: sticky;
+  top: 0;
+}
+
+footer {
+  width: 100%;
+  text-align: right;
+  padding-right: 20px;
+  -webkit-box-shadow: 0 -3px 10px rgba(0,0,0,.35);
+  box-shadow: 0 -3px 10px rgba(0,0,0,.35);
+  color: gray;
+  background-color: #f0f0f0;
+  position: fixed;
+  bottom: 0;
+}
+
+#logo {
+  width: 150px;
+}
+
+.pmcp {
+  font-family: rounded;
+}
+
+#keyboard-section {
+  margin: 20px;
+}
+
+table.keyboard {
+  background-color: #535353;
+  border-spacing: 5px;
+  border-collapse: separate;
+}
+
+table.keyboard td {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 30px;
+  background-color: #333333;
+  color: #c3c3c3;
+  margin: 5px;
+}
+
+table.keyboard td:hover {
+  background-color: #e5e5e5;
+  color: black;
+}
+
+table.keyboard td:active {
+  background-color: #005242;
+  color: #c3c3c3;
+}
+
+.toggle_input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.toggle_label {
+  width: 75px;
+  height: 35px;
+  background: #ccc;
+  position: relative;
+  display: inline-block;
+  border-radius: 40px;
+  transition: 0.4s;
+  box-sizing: border-box;
+}
+
+.toggle_label:after {
+  content: "";
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  border-radius: 100%;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  background: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  transition: 0.4s;
+}
+
+.toggle_input:checked + .toggle_label {
+  background-color: #02c09a;
+}
+
+.toggle_input:checked + .toggle_label:after {
+  left: 40px;
+}
+
+.toggle_button {
+  position: relative;
+  width: 75px;
+  height: 35px;
+  margin: auto;
+}

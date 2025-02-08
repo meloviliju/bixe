@@ -8,7 +8,7 @@ const fs = require('fs');
 // so we replace the small Roman numeral with the capital Roman numeral right after converting the string to lowercase.
 
 function toLowerCaseIgnoringRomanC(str) {
-  return str.toLowerCase().replaceAll("\u217d", "\u216d");
+  return str.toLowerCase().replaceAll('\u217d', '\u216d');
 }
 
 
@@ -46,7 +46,7 @@ export type CorpusElem = {
 };
 export const CORPUS: CorpusElem[] = ${JSON.stringify(corpus.slice(1), null, 2)};`);
 fs.writeFileSync('../ts-src/linkMap.ts', `/* AUTOMATICALLY GENERATED. DO NOT EDIT MANUALLY */
-export type Source = ${sources.map(s => JSON.stringify(s)).join(" | ")};
+export type Source = ${sources.map(s => JSON.stringify(s)).join(' | ')};
 export const sources_new_to_old: string[] = ${JSON.stringify(sources)};
 export const is_valid_source = (source: string): source is Source => {
   return sources_new_to_old.includes(source);
@@ -63,8 +63,8 @@ export const HYPERLINKS: Hyperlinks = ${JSON.stringify(linkMap, null, 2)};`);
 const [_, ...corpus_] = corpus;
 const source_text = toLowerCaseIgnoringRomanC(corpus_
   .map(item => item.pmcp)
-  .join("        ")
-  .replaceAll(/\{[\s\S]*?\}/g, " ")
+  .join('        ')
+  .replaceAll(/\{[\s\S]*?\}/g, ' ')
 );
 
 // Make a table of trigrams
@@ -84,7 +84,7 @@ const TRIGRAMS = ${JSON.stringify(trigrams, null, 2)};`);
 // words
 const words = fs.readFileSync('words.tsv', 'utf8').split(/\r\n|\n/).map(line => {
   const [_0, 語, _2, 品詞, 目録から排除, _5, _6, _7, 意味_日, 意味_理] = line.split('\t');
-  return { 語, 品詞, 目録から排除: 目録から排除 === "TRUE", 意味_日 };
+  return { 語, 品詞, 目録から排除: 目録から排除 === 'TRUE', 意味_日 };
 });
 
 fs.writeFileSync('../ts-src/words.ts', `/* AUTOMATICALLY GENERATED. DO NOT EDIT MANUALLY */
