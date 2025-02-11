@@ -1,5 +1,5 @@
-import { Fragment, useContext } from 'react'
-import langContext from '@/hooks/langContext'
+import { Fragment } from 'react'
+import { useLangs } from '@/hooks/useLangs'
 import { toLowerCaseIgnoringRomanC } from '@/hooks/ts-src/case_conversion_ignoring_roman_c'
 import { queryLemma } from '@/hooks/ts-src/query_lemma'
 import { kana_words } from '@/hooks/ts-src/to_kana'
@@ -12,7 +12,7 @@ type Props = {
 }
 
 const Tooltip = ({ text }: Props) => {
-  const { envLang } = useContext(langContext)
+  const { langs: {envLang} } = useLangs()
   const description = queryLemma(text, true)
   if (description.kind === 'ok') {
     return (

@@ -1,10 +1,10 @@
 import CorpusText from '@/components/Entry/CorpusText';
 import { Result } from '@/consts/types';
-import langContext from '@/hooks/langContext';
+import { useLangs } from '@/hooks/useLangs'
 import { HYPERLINKS, is_valid_source, Source } from '@/hooks/ts-src/linkMap';
 import { kana_words } from '@/hooks/ts-src/to_kana';
 import style from '@/styles/entry.module.css'
-import { JSX, useContext } from 'react';
+import { JSX } from 'react';
 import TranslationJa from './TranslationJa';
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
 }
 
 const Entry = ({ result }: Props) => {
-  const { searchLang } = useContext(langContext)
+  const { langs: {searchLang} } = useLangs()
   const { pmcp: pmcp_text, ja, directJa, en, source } = result.item;
   const kana = (() => {
     try {

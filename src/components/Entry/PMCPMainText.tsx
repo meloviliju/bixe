@@ -1,8 +1,7 @@
 import '@/styles/common.css'
-import { useContext } from 'react'
 import MatchedPortion from '@/components/Entry/MatchedPortion'
 import { MatchedToken, Token } from '@/consts/types'
-import langContext from '@/hooks/langContext'
+import { useLangs } from '@/hooks/useLangs'
 import style from '@/styles/tooltip.module.css'
 import { isBlatantTypo } from '@/hooks/ts-src/blatant-typo'
 import { isEarthlingWord } from '@/hooks/ts-src/earthling'
@@ -13,7 +12,7 @@ type Props = {
 }
 
 const PMCPMainText = ({ token, comparedToken }: Props) => {
-  const { envLang, searchLang } = useContext(langContext)
+  const { langs } = useLangs()
   const isBlatant = isBlatantTypo(token.content)
   const isEarthling = isEarthlingWord(token.content)
 
@@ -21,9 +20,9 @@ const PMCPMainText = ({ token, comparedToken }: Props) => {
     <span className={`${style.mainText
       } ${isBlatant ? style.blatantTypo : ''
       } ${isEarthling ? style.inEarthlingList : ''
-      } ${envLang === 'x-pmcp' ? 'pmcp' : ''
+      } ${langs.envLang === 'x-pmcp' ? 'pmcp' : ''
       }`}>
-      {searchLang === 'ja' && typeof comparedToken !== 'string'
+      {langs.searchLang === 'ja' && typeof comparedToken !== 'string'
         // here shouldn't be highlighted
         ? `${comparedToken.beforeMatch}${comparedToken.matchedPortion.content}${comparedToken.afterMatch}`
         : <MainTextContent comparedToken={comparedToken} />}
