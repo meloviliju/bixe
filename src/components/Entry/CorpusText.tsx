@@ -3,6 +3,7 @@ import PMCPText from '@/components/Entry/PMCPText'
 import getComparedToken from '@/hooks/getComparedToken'
 import tokenize from '@/hooks/tokenize'
 import style from '@/styles/entry.module.css'
+import CopyButton from './CopyButton'
 
 type Props = {
   fullText: string,
@@ -19,6 +20,7 @@ const CorpusText = ({ fullText, highlighted }: Props) => {
 
   return (
     <div className={style.corpusText}>
+      <CopyButton copiedText={fullText} />
       {tokens.map((tok, index) => {
         const tokStart = offset
         const tokEnd = offset + tok.content.length

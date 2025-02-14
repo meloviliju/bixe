@@ -54,7 +54,7 @@ const Entry = ({ result }: Props) => {
       {en && <div className={style.translationEn}>{en}</div>}
       <details>
         <summary className={style.summary}><span className={style.sourceName}>{source}</span></summary>
-        <ul>
+        <ul className={style.sourceLinks}>
           {HYPERLINKS[source as Source].map(
             (link, index) => <li key={index}><a href={link}>{link}</a></li>)
           }

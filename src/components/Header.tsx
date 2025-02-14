@@ -2,27 +2,35 @@ import style from '@/styles/header.module.css'
 import Toggle from '@/components/Toggle'
 import { useLangs } from '@/hooks/useLangs';
 import { Lang } from '@/consts/lang';
+import { useEffect, useState } from 'react';
 
 type Props = {
   searchText: string;
   setSearchText: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const option: { [x in string]: Lang } = {
-  '日': 'ja',
-  '東': 'x-pmcp'
-}
+const langs: Lang[] = ['ja', 'x-pmcp']
+const option = ['日', '東']
 
 const Header = ({ searchText, setSearchText }: Props) => {
   const { langs: { envLang, searchLang }, setLangs } = useLangs()
+  const [optionIndex, setOptionIndex] = useState(langs.indexOf(envLang))
+
+  useEffect(() => {
+    setLangs({
+      searchLang: langs[optionIndex],
+      envLang
+    })
+  }, [optionIndex, setLangs])
+
   return (
     <header>
       <div
         className={style.titleContainer}
         onClick={() => {
-          setLangs(() => searchLang === 'ja'
-            ? { envLang, searchLang: 'x-pmcp' }
-            : { envLang, searchLang: 'ja' }
+          setLangs(() => envLang === 'ja'
+            ? { envLang: 'x-pmcp', searchLang }
+            : { envLang: 'ja', searchLang }
           )
         }}>
         <div className={style.title}>
@@ -35,8 +43,9 @@ const Header = ({ searchText, setSearchText }: Props) => {
         <div className={style.searchContainer}>
           <select
             className={style.searchOption}
-            onChange={(e) => setLangs({ envLang: option[e.target.value], searchLang })}>
-            {Object.keys(option).map((key) => <option value={key}>{key}</option>)}
+            value={option[optionIndex]}
+            onChange={(e) => setOptionIndex(option.indexOf(e.target.value))}>
+            {option.map((o, i) => <option key={i} value={o}>{o}</option>)}
           </select>
           <input
             type="text"

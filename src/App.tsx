@@ -13,7 +13,7 @@ function App() {
   const [result, setResult] = useState<Result[]>([])
   const [searchText, setSearchText] = useState("")
   const { setLangs } = useLangs()
-  
+
   const query = parseQuery(queryString.parse(location.search))
 
   useEffectOnce(() => {
@@ -27,7 +27,6 @@ function App() {
   return (
     <>
       <Header searchText={searchText} setSearchText={setSearchText} />
-      <ResultSection results={result} />
       <ResultSection results={[{
         item: {
           "source": "日本の遊戯 第一号",
