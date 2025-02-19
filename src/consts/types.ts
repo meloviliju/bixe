@@ -1,3 +1,5 @@
+import { Source } from "@/hooks/ts-src/linkMap"
+
 export type Word = {
   headword: string,
   pronunciation: string,
@@ -20,7 +22,7 @@ export type MatchedToken = {
 }
 
 type CorpusElem = {
-  source: string;
+  source: Source;
   pmcp: string;
   directJa: string;
   ja: string;

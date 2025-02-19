@@ -1,4 +1,4 @@
-import { tokenize } from '../tokenize.js';
+import tokenize from '../tokenize.js';
 import { correctBlatantTypo, isBlatantTypo } from './blatant-typo.js';
 import { toLowerCaseIgnoringRomanC } from './case_conversion_ignoring_roman_c.js';
 import { expectedSourcesForEarthlingWord, isEarthlingWord } from './earthling.js';

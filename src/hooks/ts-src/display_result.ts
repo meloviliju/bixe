@@ -1,8 +1,8 @@
-import { CorpusElem } from './corpus.js';
 import { getSinglyAnnotatedLine } from './get_singly_annotated_line.js';
-import { HYPERLINKS, is_valid_source } from './linkMap.js';
-import { get_matches } from './search.js';
+import { HYPERLINKS, isValidSource } from './linkMap.js';
+import { getMatches } from './search.js';
 import { kana_words } from './to_kana.js';
+import { Result } from '@/consts/types.js';
 
 let controller: AbortController | null = null;
 
@@ -32,19 +32,12 @@ export async function display_result(search_by_lang: 'pmcp' | 'ja' = 'pmcp') {
     document.getElementById('search-count')!.style.visibility = 'visible';
 
     try {
-        let items: {
-            item: CorpusElem;
-            matched_portions: {
-                match: string;
-                beginIndex: number;
-                endIndex: number;
-            }[];
-        }[];
+        let items: Result[] = [];
         try {
             if (search_by_lang === 'pmcp') {
-                items = get_matches(search_string, 'pmcp');
+                items = await getMatches(search_string, 'x-pmcp');
             } else {
-                items = get_matches(search_string, 'ja');
+                items = await getMatches(search_string, 'ja');
             }
         } catch (e) {
             // RegExp compilation failed
@@ -54,12 +47,12 @@ export async function display_result(search_by_lang: 'pmcp' | 'ja' = 'pmcp') {
         }
         document.getElementById('search-bar')!.style.backgroundColor = '#ffffff';
 
-        const search_count = items.map(item => item.matched_portions.length).reduce((a, b) => a + b, 0);
+        const search_count = items.map(item => item.matchedPortions.length).reduce((a, b) => a + b, 0);
         document.getElementById('search-count')!.textContent = search_count === 0 ? '見つかりませんでした。' : search_count + ' 個見つかりました。'
 
         /*
         Each item is of the following form:
-        {"item":{"source":"プロパガンダかるた","pmcp":"icco cecnutit lata pi lata cecnutit icco","direct_ja":"","ja":"国が人を守り、人が国を守る","en":""},"matched_portions":[{"match":"cecnutit","beginIndex":5,"endIndex":13},{"match":"cecnutit","beginIndex":27,"endIndex":35}]}
+        {"item":{"source":"プロパガンダかるた","pmcp":"icco cecnutit lata pi lata cecnutit icco","directJa":"","ja":"国が人を守り、人が国を守る","en":""},"matched_portions":[{"match":"cecnutit","beginIndex":5,"endIndex":13},{"match":"cecnutit","beginIndex":27,"endIndex":35}]}
     
         I would like to turn this into
         <div class="searched-item">
@@ -79,8 +72,8 @@ export async function display_result(search_by_lang: 'pmcp' | 'ja' = 'pmcp') {
             if (signal.aborted) {
                 throw new Error('cancelled');
             }
-            const { pmcp: pmcp_text, ja, direct_ja, en } = item.item;
-            const { matched_portions } = item;
+            const { pmcp: pmcp_text, ja, directJa, en } = item.item;
+            const { matchedPortions } = item;
             const kana = (() => {
                 try {
                     return kana_words(pmcp_text);
@@ -90,7 +83,7 @@ export async function display_result(search_by_lang: 'pmcp' | 'ja' = 'pmcp') {
             })();
 
             const source_signifier = item.item.source;
-            if (!is_valid_source(source_signifier)) {
+            if (!isValidSource(source_signifier)) {
                 throw new Error(`Invalid source signifier: ${source_signifier}`);
             }
 
@@ -103,7 +96,7 @@ export async function display_result(search_by_lang: 'pmcp' | 'ja' = 'pmcp') {
                     corpusText.style.fontFamily = 'rounded';
                 }
                 corpusText.className = 'corpus-text';
-                for (const { match, beginIndex, endIndex } of matched_portions) {
+                for (const { match, beginIndex, endIndex } of matchedPortions) {
                     corpusText.appendChild(getSinglyAnnotatedLine(pmcp_text, source_signifier, { beginIndex, endIndex, match }));
                     corpusText.appendChild(document.createElement('hr'));
                 }
@@ -136,7 +129,7 @@ export async function display_result(search_by_lang: 'pmcp' | 'ja' = 'pmcp') {
             } else {
                 let ans = '';
                 let current_index = 0;
-                for (const { beginIndex, endIndex } of matched_portions) {
+                for (const { beginIndex, endIndex } of matchedPortions) {
                     ans += ja.substring(current_index, beginIndex);
                     ans += `<span class="matched-portion">${ja.substring(beginIndex, endIndex)}</span>`;
                     current_index = endIndex;
@@ -146,10 +139,10 @@ export async function display_result(search_by_lang: 'pmcp' | 'ja' = 'pmcp') {
             }
             searched_item.appendChild(translationJa);
 
-            if (direct_ja !== '') {
+            if (directJa !== '') {
                 const translationJaDirect = document.createElement('div');
                 translationJaDirect.className = 'translation-ja-direct';
-                translationJaDirect.textContent = direct_ja;
+                translationJaDirect.textContent = directJa;
                 searched_item.appendChild(translationJaDirect);
             }
 

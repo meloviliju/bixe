@@ -1,7 +1,7 @@
 import { toLowerCaseIgnoringRomanC } from './case_conversion_ignoring_roman_c.js';
 
 type Onset = 'p' | 'b' | 'm' | 'k' | 'l' | 'n' | 'c' | 'x' | 'z' | 't' | 'd' | 'j' | 'w' | 'h' | 'g' | 's' | '';
-type VowelOrEmpty = 'a' | 'i' | 'u' | 'e' | 'o' | '';
+// type VowelOrEmpty = 'a' | 'i' | 'u' | 'e' | 'o' | '';
 
 type KanaTable = {
     [key in Onset]: {
@@ -42,9 +42,9 @@ function is_vowel(v: string): v is 'a' | 'i' | 'u' | 'e' | 'o' {
     return ['a', 'i', 'u', 'e', 'o'].includes(v);
 }
 
-function is_vowel_or_empty(v: string): v is VowelOrEmpty {
-    return ['a', 'i', 'u', 'e', 'o', ''].includes(v);
-}
+// function is_vowel_or_empty(v: string): v is VowelOrEmpty {
+//     return ['a', 'i', 'u', 'e', 'o', ''].includes(v);
+// }
 
 export function to_kana(str: string) {
     const whole_word = str;

@@ -30,6 +30,6 @@ export async function getMatches(regex_str: string, lang: Lang): Promise<Result[
                 myRe.lastIndex++;
             }
         }
-        return { item, matchedPortions: matchedPortions };
+        return { item, matchedPortions: matchedPortions } as Result;
     });
 }

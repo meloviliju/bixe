@@ -130,7 +130,7 @@ function fitDoublePowerLaw(
 
     const sum = sorted_occurrences.reduce((acc, [_k, v]) => acc + v, 0);
 
-    const sortedData = sorted_occurrences.map(([k, v], i) => ({ freq: v / sum }));
+    const sortedData = sorted_occurrences.map(([_k, v]) => ({ freq: v / sum }));
     const N = sortedData.length;
 
     // Define the search range for gamma.

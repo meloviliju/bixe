@@ -1,4 +1,4 @@
-const fs = require('fs');
+import fs from 'fs';
 
 // There are two Roman numerals:
 // U+216D Roman Numeral One Hundred
@@ -13,8 +13,8 @@ function toLowerCaseIgnoringRomanC(str) {
 
 
 const corpus = fs.readFileSync('corpus.tsv', 'utf8').split(/\r\n|\n/).map(line => {
-  const [source, pmcp, direct_ja, ja, en] = line.split('\t');
-  return { source, pmcp: toLowerCaseIgnoringRomanC(pmcp), direct_ja, ja, en };
+  const [source, pmcp, directJa, ja, en] = line.split('\t');
+  return { source, pmcp: toLowerCaseIgnoringRomanC(pmcp), directJa, ja, en };
 });
 
 const links = fs.readFileSync('links.tsv', 'utf8').split(/\r\n|\n/).map(line => {
@@ -36,20 +36,20 @@ const linkMap = links.reduce((acc, { source, links }) => {
   return acc;
 }, {});
 
-fs.writeFileSync('../ts-src/corpus.ts', `/* AUTOMATICALLY GENERATED. DO NOT EDIT MANUALLY */
-export type CorpusElem = {
+fs.writeFileSync('../src/hooks/ts-src/corpus.ts', `/* AUTOMATICALLY GENERATED. DO NOT EDIT MANUALLY */
+type CorpusElem = {
   source: string;
   pmcp: string;
-  direct_ja: string;
+  directJa: string;
   ja: string;
   en: string;
 };
 export const CORPUS: CorpusElem[] = ${JSON.stringify(corpus.slice(1), null, 2)};`);
-fs.writeFileSync('../ts-src/linkMap.ts', `/* AUTOMATICALLY GENERATED. DO NOT EDIT MANUALLY */
+fs.writeFileSync('../src/hooks/ts-src/linkMap.ts', `/* AUTOMATICALLY GENERATED. DO NOT EDIT MANUALLY */
 export type Source = ${sources.map(s => JSON.stringify(s)).join(' | ')};
-export const sources_new_to_old: string[] = ${JSON.stringify(sources)};
-export const is_valid_source = (source: string): source is Source => {
-  return sources_new_to_old.includes(source);
+export const sourcesNewToOld: string[] = ${JSON.stringify(sources)};
+export const isValidSource = (source: string): source is Source => {
+  return sourcesNewToOld.includes(source);
 }
 
 export type Hyperlinks = {
@@ -61,7 +61,7 @@ export const HYPERLINKS: Hyperlinks = ${JSON.stringify(linkMap, null, 2)};`);
 
 // trigram
 const [_, ...corpus_] = corpus;
-const source_text = toLowerCaseIgnoringRomanC(corpus_
+const sourceText = toLowerCaseIgnoringRomanC(corpus_
   .map(item => item.pmcp)
   .join('        ')
   .replaceAll(/\{[\s\S]*?\}/g, ' ')
@@ -69,8 +69,8 @@ const source_text = toLowerCaseIgnoringRomanC(corpus_
 
 // Make a table of trigrams
 const trigrams = {};
-for (let i = 0; i < source_text.length - 2; i++) {
-  const trigram = source_text.slice(i, i + 3);
+for (let i = 0; i < sourceText.length - 2; i++) {
+  const trigram = sourceText.slice(i, i + 3);
   if (trigram in trigrams) {
     trigrams[trigram]++;
   } else {
@@ -78,7 +78,7 @@ for (let i = 0; i < source_text.length - 2; i++) {
   }
 }
 
-fs.writeFileSync('../ts-src/trigrams.ts', `/* AUTOMATICALLY GENERATED. DO NOT EDIT MANUALLY */
+fs.writeFileSync('../src/hooks/ts-src/trigrams.ts', `/* AUTOMATICALLY GENERATED. DO NOT EDIT MANUALLY */
 const TRIGRAMS = ${JSON.stringify(trigrams, null, 2)};`);
 
 // words
@@ -87,7 +87,7 @@ const words = fs.readFileSync('words.tsv', 'utf8').split(/\r\n|\n/).map(line => 
   return { 語, 品詞, 目録から排除: 目録から排除 === 'TRUE', 意味_日 };
 });
 
-fs.writeFileSync('../ts-src/words.ts', `/* AUTOMATICALLY GENERATED. DO NOT EDIT MANUALLY */
+fs.writeFileSync('../src/hooks/ts-src/words.ts', `/* AUTOMATICALLY GENERATED. DO NOT EDIT MANUALLY */
 export type Word = {
   語: string;
   品詞: string;

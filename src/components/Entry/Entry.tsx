@@ -2,7 +2,7 @@ import { JSX } from 'react';
 import TranslationJa from './TranslationJa';
 import CorpusText from '@/components/Entry/CorpusText';
 import { Result } from '@/consts/types';
-import { HYPERLINKS, is_valid_source, Source } from '@/hooks/ts-src/linkMap';
+import { HYPERLINKS, isValidSource, Source } from '@/hooks/ts-src/linkMap';
 import { kana_words } from '@/hooks/ts-src/to_kana';
 import { useLangs } from '@/hooks/useLangs'
 import style from '@/styles/entry.module.css'
@@ -23,7 +23,7 @@ const Entry = ({ result }: Props) => {
   })();
 
   const source_signifier = source;
-  if (!is_valid_source(source_signifier)) {
+  if (!isValidSource(source_signifier)) {
     throw new Error(`Invalid source signifier: ${source_signifier}`);
   }
 

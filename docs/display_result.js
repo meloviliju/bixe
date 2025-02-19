@@ -42,7 +42,7 @@ export async function display_result(search_by_lang = "pmcp") {
         document.getElementById("search-count").textContent = search_count === 0 ? "見つかりませんでした。" : search_count + " 個見つかりました。";
         /*
         Each item is of the following form:
-        {"item":{"source":"プロパガンダかるた","pmcp":"icco cecnutit lata pi lata cecnutit icco","direct_ja":"","ja":"国が人を守り、人が国を守る","en":""},"matched_portions":[{"match":"cecnutit","beginIndex":5,"endIndex":13},{"match":"cecnutit","beginIndex":27,"endIndex":35}]}
+        {"item":{"source":"プロパガンダかるた","pmcp":"icco cecnutit lata pi lata cecnutit icco","directJa":"","ja":"国が人を守り、人が国を守る","en":""},"matched_portions":[{"match":"cecnutit","beginIndex":5,"endIndex":13},{"match":"cecnutit","beginIndex":27,"endIndex":35}]}
     
         I would like to turn this into
         <div class="searched-item">
@@ -60,7 +60,7 @@ export async function display_result(search_by_lang = "pmcp") {
             if (signal.aborted) {
                 throw new Error("cancelled");
             }
-            const { pmcp: pmcp_text, ja, direct_ja, en } = item.item;
+            const { pmcp: pmcp_text, ja, directJa, en } = item.item;
             const { matched_portions } = item;
             const kana = (() => {
                 try {
@@ -123,10 +123,10 @@ export async function display_result(search_by_lang = "pmcp") {
                 translationJa.innerHTML = ans;
             }
             searched_item.appendChild(translationJa);
-            if (direct_ja !== "") {
+            if (directJa !== "") {
                 const translationJaDirect = document.createElement("div");
                 translationJaDirect.className = "translation-ja-direct";
-                translationJaDirect.textContent = direct_ja;
+                translationJaDirect.textContent = directJa;
                 searched_item.appendChild(translationJaDirect);
             }
             if (en !== "") {
