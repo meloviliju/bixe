@@ -1,11 +1,11 @@
-import CorpusText from '@/components/Entry/CorpusText';
-import { Result } from '@/consts/types';
-import { useLangs } from '@/hooks/useLangs'
-import { HYPERLINKS, is_valid_source, Source } from '@/hooks/ts-src/linkMap';
-import { kana_words } from '@/hooks/ts-src/to_kana';
-import style from '@/styles/entry.module.css'
 import { JSX } from 'react';
 import TranslationJa from './TranslationJa';
+import CorpusText from '@/components/Entry/CorpusText';
+import { Result } from '@/consts/types';
+import { HYPERLINKS, is_valid_source, Source } from '@/hooks/ts-src/linkMap';
+import { kana_words } from '@/hooks/ts-src/to_kana';
+import { useLangs } from '@/hooks/useLangs'
+import style from '@/styles/entry.module.css'
 
 type Props = {
   result: Result,
@@ -13,11 +13,11 @@ type Props = {
 
 const Entry = ({ result }: Props) => {
   const { langs: {searchLang} } = useLangs()
-  const { pmcp: pmcp_text, ja, directJa, en, source } = result.item;
+  const { pmcp, ja, directJa, en, source } = result.item;
   const kana = (() => {
     try {
-      return kana_words(pmcp_text);
-    } catch (e) {
+      return kana_words(pmcp);
+    } catch {
       return '';
     }
   })();
@@ -30,10 +30,10 @@ const Entry = ({ result }: Props) => {
   const pmcpText: JSX.Element[] = searchLang === 'x-pmcp'
     ? result.matchedPortions.map((matchedPortion, index) => {
       return (
-        <CorpusText key={index} fullText={pmcp_text} highlighted={matchedPortion} />
+        <CorpusText key={index} fullText={pmcp} highlighted={matchedPortion} />
       )
     })
-    : [<CorpusText fullText={pmcp_text} />]
+    : [<CorpusText fullText={pmcp} />]
 
   const jaText: JSX.Element[] = searchLang === 'ja'
     ? result.matchedPortions.map((matchedPortion, index) => {
@@ -46,7 +46,7 @@ const Entry = ({ result }: Props) => {
   return (
     <div className={style.searchedItem}>
       {...pmcpText}
-      <div className={style.pronunciation}>{kana}</div>
+      {kana && <div className={style.pronunciation}>{kana}</div>}
       <div className={style.translationJa}>
         {...jaText}
         {directJa && <div className={style.translationJaDirect}>{directJa}</div>}

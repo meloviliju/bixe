@@ -2,9 +2,9 @@ import '@/styles/common.css'
 import { Fragment } from 'react'
 import MatchedPortion from '@/components/Entry/MatchedPortion'
 import { MatchedToken } from '@/consts/types'
-import style from '@/styles/entry.module.css'
-import tokenize from '@/hooks/tokenize'
 import getComparedToken from '@/hooks/getComparedToken'
+import tokenize from '@/hooks/tokenize'
+import style from '@/styles/entry.module.css'
 
 type Props = {
   fullText: string,

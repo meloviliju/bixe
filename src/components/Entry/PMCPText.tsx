@@ -1,7 +1,7 @@
-import { MatchedToken, Token } from "@/consts/types"
-import PMCPMainText from "./PMCPMainText"
+import PMCPMainText from './PMCPMainText'
+import Tooltip from '@/components/Entry/Tooltip'
+import { MatchedToken, Token } from '@/consts/types'
 import style from '@/styles/tooltip.module.css'
-import Tooltip from "@/components/Entry/Tooltip"
 
 type Props = {
   hasTooltip: boolean,

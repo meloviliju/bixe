@@ -4,15 +4,18 @@ import style from '@/styles/entry.module.css'
 
 type Props = {
   results: Result[],
+  searchText: string,
 }
 
-const ResultSection = ({ results }: Props) => {
+const ResultSection = ({ results, searchText }: Props) => {
   return (
     <>
       {results.length !== 0 && <section className={style.searchCount}>{results.length}個見つかりました。</section>}
       <section className={style.resultsSection}>
         {results.length === 0
-          ? '東島通商語コーパス検索システム「ビシェ」へようこそ。'
+          ? searchText === ''
+            ? '東島通商語コーパス検索システム「ビシェ」へようこそ。'
+            : '見つかりませんでした。'
           : results.map((result, index) => <Entry key={index} result={result} />)
         }
       </section>

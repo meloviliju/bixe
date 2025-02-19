@@ -1,9 +1,9 @@
+import CopyButton from './CopyButton'
 import MatchedPortion from '@/components/Entry/MatchedPortion'
 import PMCPText from '@/components/Entry/PMCPText'
 import getComparedToken from '@/hooks/getComparedToken'
 import tokenize from '@/hooks/tokenize'
 import style from '@/styles/entry.module.css'
-import CopyButton from './CopyButton'
 
 type Props = {
   fullText: string,

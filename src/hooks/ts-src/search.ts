@@ -1,20 +1,23 @@
 import { CORPUS } from './corpus.js';
-import { sources_new_to_old } from './linkMap.js';
+import { sourcesNewToOld } from './linkMap.js';
+import { Lang } from '@/consts/lang.js';
+import { Result } from '@/consts/types.js';
 
-export const corpus_new_to_old = [...CORPUS].toSorted((a, b) => sources_new_to_old.indexOf(a.source) - sources_new_to_old.indexOf(b.source))
+export const corpusNewToOld = [...CORPUS].toSorted((a, b) => sourcesNewToOld.indexOf(a.source) - sourcesNewToOld.indexOf(b.source))
 
 
-export function get_matches(regex_str: string, lang: 'pmcp' | 'ja' | 'direct_ja') {
-    return corpus_new_to_old.filter(item => item[lang].match(new RegExp(regex_str, 'gi'))).map(item => {
-        const matched_portions = [];
+export async function getMatches(regex_str: string, lang: Lang): Promise<Result[]> {
+    const l = lang === 'x-pmcp' ? 'pmcp' : lang;
+    return corpusNewToOld.filter(item => item[l].match(new RegExp(regex_str, 'gi'))).map(item => {
+        const matchedPortions = [];
         /* 
         g - global 
         i - case insensitive
         d - get the indices */
         const myRe = new RegExp(regex_str, 'gid');
         let myArray: RegExpExecArray | null;
-        while ((myArray = myRe.exec(item[lang])) !== null) {
-            matched_portions.push({
+        while ((myArray = myRe.exec(item[l])) !== null) {
+            matchedPortions.push({
                 match: myArray[0],
                 beginIndex: myArray.indices![0][0],
                 endIndex: myRe.lastIndex
@@ -27,6 +30,6 @@ export function get_matches(regex_str: string, lang: 'pmcp' | 'ja' | 'direct_ja'
                 myRe.lastIndex++;
             }
         }
-        return { item, matched_portions };
+        return { item, matchedPortions: matchedPortions };
     });
 }

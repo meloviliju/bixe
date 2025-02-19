@@ -1,10 +1,10 @@
 import '@/styles/common.css'
 import MatchedPortion from '@/components/Entry/MatchedPortion'
 import { MatchedToken, Token } from '@/consts/types'
-import { useLangs } from '@/hooks/useLangs'
-import style from '@/styles/tooltip.module.css'
 import { isBlatantTypo } from '@/hooks/ts-src/blatant-typo'
 import { isEarthlingWord } from '@/hooks/ts-src/earthling'
+import { useLangs } from '@/hooks/useLangs'
+import style from '@/styles/tooltip.module.css'
 
 type Props = {
   token: Token,

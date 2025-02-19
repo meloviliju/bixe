@@ -1,18 +1,18 @@
 import { Fragment } from 'react'
-import { useLangs } from '@/hooks/useLangs'
+import { correctBlatantTypo, isBlatantTypo } from '@/hooks/ts-src/blatant-typo'
 import { toLowerCaseIgnoringRomanC } from '@/hooks/ts-src/case_conversion_ignoring_roman_c'
+import { isEarthlingWord } from '@/hooks/ts-src/earthling'
 import { queryLemma } from '@/hooks/ts-src/query_lemma'
 import { kana_words } from '@/hooks/ts-src/to_kana'
+import { useLangs } from '@/hooks/useLangs'
 import style from '@/styles/tooltip.module.css'
-import { correctBlatantTypo, isBlatantTypo } from '@/hooks/ts-src/blatant-typo'
-import { isEarthlingWord } from '@/hooks/ts-src/earthling'
 
 type Props = {
   text: string,
 }
 
 const Tooltip = ({ text }: Props) => {
-  const { langs: {envLang} } = useLangs()
+  const { langs: { envLang } } = useLangs()
   const description = queryLemma(text, true)
   if (description.kind === 'ok') {
     return (
@@ -24,7 +24,15 @@ const Tooltip = ({ text }: Props) => {
               <Fragment key={index}>
                 <div>
                   <span className={style.headword}>{headword.toUpperCase()}</span>
-                  <span className={style.pronunciation} lang={envLang}>{`［${kana_words(headword)}］`}</span>
+                  <span className={style.pronunciation} lang={envLang}>
+                    {(() => {
+                      try {
+                        return `［${kana_words(headword)}］`
+                      } catch {
+                        return ''
+                      }
+                    })()}
+                  </span>
                 </div>
                 <div className={style.wordDescription} lang={envLang}>
                   <span className={style.partOfSpeech}>{partOfSpeech}</span>
@@ -60,7 +68,15 @@ const Tooltip = ({ text }: Props) => {
       <span className={`${style.tooltipText} ${style.bottomTooltipText} ${style.inEarthlingList}`}>
         <div>
           <span className={style.headword}>{text.toUpperCase()}</span>
-          <span className={style.pronunciation} lang={envLang}>{`［${kana_words(text)}］`}</span>
+          <span className={style.pronunciation} lang={envLang}>
+            {(() => {
+              try {
+                return `［${kana_words(text)}］`
+              } catch {
+                return ''
+              }
+            })()}
+          </span>
         </div>
         <div className={style.wordDescription} lang={envLang}>
           <span className={style.partOfSpeech}>現世の単語</span>

@@ -1,9 +1,9 @@
 import { isBlatantTypo } from './blatant-typo.js';
 import { EARTHLING_LIST, EARTHLING_WORDS, isEarthlingWord } from './earthling.js';
-import { tokenize } from './get_singly_annotated_line.js';
+import tokenize from '../tokenize.js';
 import { queryLemma } from './query_lemma.js';
 import { generateLogLogScatterPlotAndLinesSVG } from './scatter_plot.js';
-import { corpus_new_to_old } from './search.js';
+import { corpusNewToOld } from './search.js';
 
 function categorize() {
     const highlightable_occurrence_map: Map<string, number> = new Map();
@@ -12,7 +12,7 @@ function categorize() {
     const blatant_typo: string[] = [];
 
     const t0 = performance.now();
-    for (const item of corpus_new_to_old) {
+    for (const item of corpusNewToOld) {
         const { pmcp: pmcp_text } = item;
         const tokens = tokenize(pmcp_text);
         for (const tok of tokens) {

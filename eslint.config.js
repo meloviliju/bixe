@@ -1,4 +1,3 @@
-import query from '@tanstack/eslint-plugin-query';
 import _import from 'eslint-plugin-import';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactReflesh from 'eslint-plugin-react-refresh';
@@ -8,7 +7,7 @@ import tseslint from 'typescript-eslint';
 export default tseslint.config(
   {
     files: ["src/**/*.ts", "src/**/*.tsx"],
-    ignores: ['docs/**', 'preprocess/**', 'node_modules/**', 'coverage/**'],
+    ignores: ['docs/**', 'preprocess/**', 'node_modules/**', 'coverage/**', '**/ts-src/**'],
     languageOptions: {
       parser: tseslint.parser,
     },
@@ -17,14 +16,12 @@ export default tseslint.config(
       'react-hooks': reactHooks,
       'react-reflesh': reactReflesh,
       'unused-imports': unusedImport,
-      '@tanstack/query': query,
     },
     rules: {
       ...tseslint.configs.strictTypeChecked.rules,
       ...tseslint.configs.stylisticTypeChecked.rules,
       ...reactHooks.configs.recommended.rules,
       ..._import.configs.rules,
-      ...query.configs.recommended.rules,
       'no-useless-escape': 'warn',
       'linebreak-style': ['error', 'unix'],
       'quotes': ['warn', 'single'],
